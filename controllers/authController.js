@@ -11,6 +11,8 @@ const signToken = (id) => {
   });
 };
 
+// send json web token
+
 const createSendToken = (user, statusCode, req, res) => {
   const token = signToken(user._id);
 
