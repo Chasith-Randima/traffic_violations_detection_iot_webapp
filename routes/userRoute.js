@@ -13,6 +13,8 @@ router.use("/search", userController.searchUsers);
 
 router.get("/image/:imageName", userController.getImage);
 
+// protected routes
+
 router.use(authController.protect);
 
 router.patch("/updateMyPassword/:id", authController.updatePassword);

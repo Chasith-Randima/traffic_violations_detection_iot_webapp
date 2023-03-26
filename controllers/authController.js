@@ -84,6 +84,7 @@ exports.logOut = (req, res) => {
   });
 };
 
+// protect function
 exports.protect = catchAsync(async (req, res, next) => {
   let token;
   if (
