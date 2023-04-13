@@ -6,6 +6,8 @@ const cors = require("cors");
 const app = express();
 
 const userRouter = require("./routes/userRoute");
+const caseRouter = require("./routes/caseRoute");
+const policeRouter = require("./routes/policeRoute");
 
 if (process.env.NODE_ENV == "development") {
   app.use(morgan("dev"));
@@ -22,6 +24,10 @@ app.use((req, res, next) => {
   next();
 });
 
+app.disable("etag");
+
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/cases", caseRouter);
+app.use("/api/v1/police", policeRouter);
 
 module.exports = app;

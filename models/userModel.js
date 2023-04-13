@@ -15,19 +15,26 @@ const userSchema = new mongoose.Schema({
     validate: [validator.isEmail, "Please enter a valid email address..."],
   },
   policeId: {
-    type: Number,
+    type: String,
     required: [true, "Please tell us your police id"],
     unique: true,
   },
-  policeBranch: {
+  policeStationName: {
     type: String,
-    required: [true, "Please tell us your police branch"],
   },
+  police: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: "Police",
+      // required: [true, "Appointment must belong to a hospital"],
+    },
+  ],
   role: {
     type: String,
     enum: ["user", "admin"],
     default: "user",
   },
+  images: [String],
   password: {
     type: String,
     required: [true, "Please choose a password..."],
@@ -45,6 +52,14 @@ const userSchema = new mongoose.Schema({
     },
   },
   passwordChangedAt: Date,
+});
+
+userSchema.pre(/^findOne/, function (next) {
+  this.populate({
+    path: "police",
+    // select: '-__v -passwordChangedAt',
+  });
+  next();
 });
 
 userSchema.pre("save", async function (next) {

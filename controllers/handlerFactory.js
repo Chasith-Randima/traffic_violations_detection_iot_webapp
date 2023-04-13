@@ -43,6 +43,7 @@ exports.getAll = (Model) =>
     let filter;
 
     if (req.params.id) filter = { user: req.params.id };
+    console.log(req.query);
 
     const features = new APIFeatures(Model.find(filter), req.query)
       .filter()
