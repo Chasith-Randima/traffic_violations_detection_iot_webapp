@@ -17,7 +17,7 @@ exports.handleNumberPlate = catchAsync(async (req, res, next) => {
   let tempDate = new Date();
 
   let a = moment.tz(tempDate, "Asia/Colombo").format();
-  // console.log(new Date(a).toISOString().split("T")[1]);
+
   // console.log(new Date(a).toISOString().split("T")[0]);
   console.log(a.toString().split("T")[1]);
   console.log(a.toString().split("T")[0]);

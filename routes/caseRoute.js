@@ -6,7 +6,7 @@ const caseController = require("../controllers/caseController");
 router.use("/search", caseController.searchCases);
 router.use("/searchCases", caseController.searchCityCases);
 
-// -------------aggregate functions routes-------------------
+// -------------aggregate functions routes------------------
 
 router.use("/casesCountByDate", caseController.getCasesCountByDate);
 router.use("/casesCountByTime", caseController.getCasesCountByTime);
