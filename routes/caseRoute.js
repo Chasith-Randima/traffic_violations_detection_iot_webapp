@@ -8,6 +8,20 @@ router.use("/searchCases", caseController.searchCityCases);
 
 // -------------aggregate functions routes-------------------
 
+router.use("/casesCountByDate", caseController.getCasesCountByDate);
+router.use("/casesCountByTime", caseController.getCasesCountByTime);
+router.use("/casesCountByCity", caseController.getCasesCountByCity);
+router.use("/casesCountByActive", caseController.getCasesActiveCount);
+router.use(
+  "/casesCountByVehicleNumber",
+  caseController.getCasesCountByVehicleNumber
+);
+router.use("/casesCountByYear", caseController.getCaseStatsByYear);
+router.use("/casesCountByWeekDays", caseController.getCaseCaseCountByWeekDays);
+router.use("/casesCountByDailyHours", caseController.getCaseCountByDailyHours);
+
+// -------------aggregate functions routes-------------------
+
 // router.route("/handleVehicleNumber").get(caseController.handleNumberPlate);
 router
   .route("/handleVehicleNumber/:vehicleNumber/:city")

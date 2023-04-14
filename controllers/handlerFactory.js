@@ -83,6 +83,7 @@ exports.updateOne = (Model) =>
     res.status(200).json({
       status: "success",
       message: "Document updated successfully...",
+
       doc,
     });
   });

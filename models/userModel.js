@@ -2,57 +2,62 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 
-const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, "Please tell us your name..."],
-  },
-  email: {
-    type: String,
-    required: [true, "Please tell us your email..."],
-    unique: true,
-    lowercase: true,
-    validate: [validator.isEmail, "Please enter a valid email address..."],
-  },
-  policeId: {
-    type: String,
-    required: [true, "Please tell us your police id"],
-    unique: true,
-  },
-  policeStationName: {
-    type: String,
-  },
-  police: [
-    {
-      type: mongoose.Schema.ObjectId,
-      ref: "Police",
-      // required: [true, "Appointment must belong to a hospital"],
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: [true, "Please tell us your name..."],
     },
-  ],
-  role: {
-    type: String,
-    enum: ["user", "admin"],
-    default: "user",
-  },
-  images: [String],
-  password: {
-    type: String,
-    required: [true, "Please choose a password..."],
-    minlength: 8,
-    select: false,
-  },
-  passwordConfirm: {
-    type: String,
-    required: [true, "Please confirm your password..."],
-    validate: {
-      validator: function (el) {
-        return el === this.password;
+    email: {
+      type: String,
+      required: [true, "Please tell us your email..."],
+      unique: true,
+      lowercase: true,
+      validate: [validator.isEmail, "Please enter a valid email address..."],
+    },
+    policeId: {
+      type: String,
+      required: [true, "Please tell us your police id"],
+      unique: true,
+    },
+    policeStationName: {
+      type: String,
+    },
+    police: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "Police",
+        // required: [true, "Appointment must belong to a hospital"],
       },
-      message: "Passwords are not the same",
+    ],
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
     },
+    images: [String],
+    password: {
+      type: String,
+      required: [true, "Please choose a password..."],
+      minlength: 8,
+      select: false,
+    },
+    passwordConfirm: {
+      type: String,
+      required: [true, "Please confirm your password..."],
+      validate: {
+        validator: function (el) {
+          return el === this.password;
+        },
+        message: "Passwords are not the same",
+      },
+    },
+    passwordChangedAt: Date,
   },
-  passwordChangedAt: Date,
-});
+  {
+    timestamps: true,
+  }
+);
 
 userSchema.pre(/^findOne/, function (next) {
   this.populate({
