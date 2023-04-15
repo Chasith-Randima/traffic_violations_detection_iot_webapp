@@ -24,7 +24,7 @@ exports.policeNameId = catchAsync(async (req, res, next) => {
 exports.searchPolice = catchAsync(async (req, res, next) => {
   const { search } = req.query;
   let date = new Date();
-  //   console.log(date.setHours(0, 0, 0));
+
   //   console.log(date.setDate(date.getDate() + 1));
   // console.log(date.setHours(0, 0, 0, 0));
   // console.log(date.toISOString());

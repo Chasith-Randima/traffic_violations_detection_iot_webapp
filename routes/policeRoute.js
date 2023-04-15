@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const policeController = require("../controllers/policeController");
 
+// police routes
+
 router.get("/policeNameId", policeController.policeNameId);
 router.get("/search", policeController.searchPolice);
 router
