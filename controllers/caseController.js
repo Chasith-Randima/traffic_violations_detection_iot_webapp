@@ -325,6 +325,8 @@ exports.getCasesCountByOwner = catchAsync(async (req, res, next) => {
     stats,
   });
 });
+
+// aggregate funcitons
 exports.getCaseStatsByYeartoBeDiscontinued = catchAsync(
   async (req, res, next) => {
     let year = new Date().getFullYear();
