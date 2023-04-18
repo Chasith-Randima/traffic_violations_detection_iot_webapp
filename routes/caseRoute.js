@@ -26,6 +26,9 @@ router.use("/casesCountByDailyHours", caseController.getCaseCountByDailyHours);
 router
   .route("/handleVehicleNumber/:vehicleNumber/:city")
   .get(caseController.handleNumberPlate);
+router
+  .route("/handleVehicleNumberSearch/:vehicleNumber/:city")
+  .get(caseController.handleNumberPlateSearch);
 
 router
   .route("/")

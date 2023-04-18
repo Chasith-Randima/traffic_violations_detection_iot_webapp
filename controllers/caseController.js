@@ -70,6 +70,65 @@ exports.handleNumberPlate = catchAsync(async (req, res, next) => {
   });
   //   const doc = await Case.create();
 });
+exports.handleNumberPlateSearch = catchAsync(async (req, res, next) => {
+  console.log(req.params);
+  let receivedTime = new Date().toISOString().split("T")[1];
+  let receivedDate = new Date().toISOString().split("T")[0];
+  let recievedVehicleNumber = req.params.vehicleNumber;
+  let cameraLocation = req.params.city;
+
+  let fetchedData;
+  let url = `${process.env.TRAFFIC_API}/vehicles/search`;
+
+  await axios(url, {
+    method: "GET",
+    params: {
+      vehicleNumber: recievedVehicleNumber,
+    },
+  }).then((data) => {
+    // console.log(data.data.doc.length);
+    // console.log(data.results != 0);
+    if (data.data.doc.length > 0) {
+      fetchedData = data.data;
+      delete fetchedData.doc[0]._id;
+      delete fetchedData.doc[0].id;
+    }
+    // fetchedData.doc[0]._id = undefined;
+    // fetchedData.doc[0].id = undefined;
+  });
+  let data =
+    fetchedData && fetchedData.doc.length > 0
+      ? {
+          receivedTime,
+          receivedDate,
+          recievedVehicleNumber,
+          cameraLocation,
+          ...fetchedData.doc[0],
+          qued: true,
+          quedDate: receivedDate,
+          quedTime: receivedTime,
+        }
+      : {
+          receivedTime,
+          receivedDate,
+          recievedVehicleNumber,
+          cameraLocation,
+          unregisterd: true,
+          qued: true,
+          quedDate: receivedDate,
+          quedTime: receivedTime,
+        };
+
+  const doc = await Case.create(data);
+  if (!doc) {
+    next(new AppError("There was a error getting data from api..", 400));
+  }
+  res.status(200).json({
+    status: "success",
+    doc,
+  });
+  //   const doc = await Case.create();
+});
 
 exports.searchCases = catchAsync(async (req, res, next) => {
   const { search } = req.query;
