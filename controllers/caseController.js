@@ -4,6 +4,7 @@ const catchAsync = require("../utils/catchAsync");
 const factory = require("./handlerFactory");
 const axios = require("axios");
 const moment = require("moment");
+require("moment-timezone");
 
 exports.createCase = factory.createOne(Case);
 exports.getAllCases = factory.getAll(Case);
@@ -13,9 +14,32 @@ exports.deleteOneCase = factory.deleteOne(Case);
 
 exports.handleNumberPlate = catchAsync(async (req, res, next) => {
   console.log(req.params);
-  let receivedTime = new Date().toISOString().split("T")[1];
-  let receivedDate = new Date().toISOString().split("T")[0];
-  let recievedVehicleNumber = req.params.vehicleNumber;
+  let tempDate = new Date();
+
+  let a = moment.tz(tempDate, "Asia/Colombo").format();
+  // console.log(new Date(a).toISOString().split("T")[1]);
+  // console.log(new Date(a).toISOString().split("T")[0]);
+  console.log(a.toString().split("T")[1]);
+  console.log(a.toString().split("T")[0]);
+  console.log("old date ", new Date().toISOString().split("T")[0]);
+  // console.log(a.toISOString().split("T")[0]);
+  // console.log();
+  // console.log(a.split("T")[1]);
+  // console.log(a.split("T")[0]);
+  // let receivedTime = new Date().toISOString().split("T")[1];
+  // let receivedDate = new Date().toISOString().split("T")[0];
+  // let tempRec = `${
+  //   new Date(a).toISOString().split("T")[1].split(".")[0].split(":")[0]
+  // }:${new Date(a).toISOString().split("T")[1].split(".")[0].split(":")[1]}`;
+  // console.log(tempRec);
+  let tempTime = `${a.toString().split("T")[1].split(":")[0]}:${
+    a.toString().split("T")[1].split(":")[1]
+  }`;
+  console.log(tempTime);
+  let receivedTime = tempTime;
+  let receivedDate = a.toString().split("T")[0];
+  // let receivedDate = new Date(a).toISOString().split("T")[0];
+  let recievedVehicleNumber = "cab3205" || req.params.vehicleNumber;
   let cameraLocation = req.params.city;
 
   let fetchedData;
